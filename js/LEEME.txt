@@ -1,0 +1,21 @@
+Estas son las librerias genericas para:
+
+	-Repartir fichas
+	-Crear juegos multiple choice
+	-Animaciones FX (simples)
+	-crear tableros
+	-mover piezas segun su forma
+	-Verificar reglas de tablero y inteligencia del enemigo (simple)
+
+Seguramente hay mas cosas.... 
+
+............................................................
+En SSH!:
+
+	linkear a un nuevo proyecto con:
+			 ln -s ../../../../lab.ensamble.com.ar/flash/sinapsis/ lib
+
+NOTA:
+	tiene que ser en relativo!
+ 
+............................................................

@@ -1,0 +1,15 @@
+crear_tablero:
+
+        - le quita las propiedades de _visible = false el MClip mc_nombre
+        - le falta ser mas intuitiva:
+                margen_ancho y margen_alto, tiene que ser "0" por defecto
+                ficha_ancho y ficha_alto tienen que ser el alto y ancho del Mclip
+                pos_x_ini,pos_y_ini: lo mismo de lo anterior
+                cantidad_fichas: si no se define tiene que ser ' filas * columnas '
+        - hacer que se puedan crear dos tablero sin tocarse
+
+fn_fichas:
+
+        - los datos incoherentes tienen que dar false
+        - hay que hacer una funcion mas linda (descriptiva)
+
