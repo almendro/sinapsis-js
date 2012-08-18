@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+#       Pasar actionscript a javascript
+#
+#
+
+find ./ -iname "*as" | while read ARCHIVO; do
+        archivo_base="$(echo $ARCHIVO | sed 's/^\.\///g; s/^\(.*\)\..*$/\1/')"
+        sed 's/#include "\(.*\)\.as"//' $ARCHIVO #> "$archivo_base.js"
+done
