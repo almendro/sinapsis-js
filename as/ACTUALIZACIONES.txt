@@ -1,0 +1,313 @@
+2011-10-04
+array/fn_aplicar_fn
+texto/strtolower
+
+2011-08-15
+
+2011-05-26
+modificada: crear_tablero
+se agrego la propiedad de nombre_base a los movieclips generados
+
+2011-05-24
+agregada: mc/fn_matar_mc
+corregida: meta_eval/fn_tipo_dato
+
+2011-05-06
+modificada: fn_array_recolectar_indices.as
+se agrego el parametro de inverso para realizar mas filtros.
+
+2011/05/03
+modificada: crear_tablero
+se agrego el valor de soy_n para saber el nro de movieclip
+
+26/4/2011
+fn_tiemp_dispara
+
+Se agrego' un para'metro después de funcio'n, para poder pasarle para'metros a la funcion que llama al final del conteo. Esto sirve para hacer loops. Se aplico' para el juego de esquiadores de plumo 5.
+
+
+-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-:-
+
+ORDENAR EN INVERSO CRONOLOGICO
+
+
+
+Nuevas funciones 12/05/2010
+
+GLOSARIO UNIFICADOR:
+
+Matriz = Array = Arreglo
+Indice = Key = Nodo = Clave
+
+Cadena = String = Texto
+
+/******************************************************************************/
+/******************************************************************************/
+/******************************************************************************/
+
+
+array.as
+
+/******************************************************************************/
+
+fn_establecer_en_nodos (param)
+
+	/*
+	Recibe una matriz y coloca en los nodos indicados por listado el valor.
+	Devuelve la matriz actualizada
+	
+	fn_establecer_en_nodos({
+		matriz: Array,
+		listado_indices: Array,
+		valor: cualquiera cosa
+	});
+	
+	
+	Ejemplo:
+	
+		Supongamos que en un tablero de 5 fichas el jugador "a" captura fichas 
+		en las posiciones 1, 4 y 5.
+		
+		tablero = [0,0,0,0,0];
+		listado = [0,3,4];
+		
+		tablero = fn_establecer_en_nodos({
+			matriz:tablero,
+			listado: listado,
+			valor: "a"
+		});
+		
+		tracer(tablero) // => a,0,0,a,a
+	*/
+	
+/******************************************************************************/
+	
+fn_extraer_valores (param)
+
+	/*
+	Extrae los valores de la matriz A usando como indices los valores de la matriz B
+	Devuelve una matriz con los valores
+	
+	fn_extraer_valores({
+		matriz_a:Array,
+		matriz_b:Array
+	});
+	
+	ej: Supongamos que nos interesa extraer los valores de unas fichas para
+	hacer alguna comprobacion.
+	
+	tablero = [0,3,3,0,3,2,0];
+	indices = [0,2,4,5];
+	
+	porcion = fn_extraer_valores({
+		matriz_a: tablero
+		matriz_b: indices
+	});
+	
+	tracer(porcion); // => [0,3,3,2]
+	
+	*/
+	/*
+	Ejemplo practico:
+	
+	en el SIX se usa la matriz lineal tablero para representar
+	un tablero de 2 dimensiones con una configuracion especial por tratarse de fichas
+	hexagonales.
+	
+	Cuando se debe verificar si al colocar una nueva ficha las casillas
+	alrededor estan vacias o no se usa una matriz con las posiciones relativas (en formato x,y)
+	a la ficha colocada para obtener las posiciones absolutas (en formato lineal)
+	de las casillas alrededor de esa ficha.
+	
+	Los posiciones absolutas son los indices de las fichas en la matriz 'tablero'
+	Lo que tenemos que hacer es extraer de 'tablero' los valores de esos indices
+	y luego verificar si estan todos en 0 o no.
+	*/
+	
+/******************************************************************************/
+
+fn_array_recolectar_indices(param)
+
+	/*
+	Devuelve una matriz con todos los indices donde aparece el valor indicado
+	
+	fn_array_recolectar_indices({
+		matriz: array,
+		valor: cualquier cosas simple String, Boolean, Number. No objetos (Array u Object)
+	});
+	
+	Ej:
+		// nodo    0 1 2 3 4 5 6 7
+		tablero = [0,3,2,3,3,2,0,0]
+		
+		mis_fichas = fn_array_recolectar_indices({
+			matriz: tablero,
+			valor: 3
+		});
+		
+		tracer(mis_fichas); // => 1,3,4
+	*/
+
+/******************************************************************************/
+
+function fn_copiar_array(param)
+
+	/*
+	Devuelve una matriz identica a la entrada
+
+	fn_copiar_array({matriz: Array});
+
+	Ej:
+		tablero = [1,2,3,4];
+		mi_copia = fn_copiar_array({matriz: tablero});
+		
+		tracer(mi_copia) // => 1,2,3,4
+		
+	NOTA ENIGMATICA: por algun motivo que desconozco, sera un fallo de flash,
+	cuando uno hace la copia directa
+
+	mi_copia = tablero
+
+	y luego se modifica 'tablero' la otra matriz tambien se altera. Me ha pasado
+	varias veces sin saber porque
+
+
+	*/
+
+	
+/******************************************************************************/
+/******************************************************************************/
+/******************************************************************************/
+
+
+funciones_tableros.as
+
+¡son muchas las nuevas!
+
+/******************************************************************************/
+
+function fn_limpiar_eventos(param)
+
+	/*
+	Elimina eventos de un listado de movieclips basado en nombre+N
+	Si no se define el entorno (ruta) toma el _root
+	
+	fn_limpiar_eventos({
+		nombre_mc: String,
+		ruta: MovieClip,
+		listado: Array
+	});
+	
+	_root.atril.ficha0.onRelease = soltar ;
+	_root.atril.ficha1.onRelease = soltar ;
+	_root.atril.ficha2.onRelease = soltar ;
+	
+	Ej:
+		fn_limpiar_eventos({
+			nombre_mc: 'ficha',
+			listado: [1,2],
+			ruta: _root.atril
+		});
+		
+		tracer (_root.atril.ficha0.onRelease) // => soltar
+		tracer (_root.atril.ficha1.onRelease) // => null
+	
+	NOTA MEJORAS: agregar la posibilidad de rango (ver la funcion que explora propiedades de mc.
+	*/
+
+/******************************************************************************/
+
+function fn_limpiar_eventos_mc(param)
+
+	/*
+	Elimina eventos de un sólo movieclip en un entorno 
+	Si no se define el entorno (ruta) toma el _root
+	
+	fn_limpiar_eventos_mc({
+		nombre_mc: String,
+		ruta: MovieClip
+	});
+	
+	Ej.
+		_root.mis_fichas.ficha0.onEnterFrame = contar;
+	
+		fn_limpiar_eventos_mc({
+				nombre_mc: 'ficha0',
+				ruta: _root.mis_fichas
+		});	
+	
+	NOTA MEJORAS: eliminar todos los eventos o grupos, o uno en particular.
+		(Consultar API)
+	*/
+	
+	
+	
+/******************************************************************************/
+
+function fn_fade_ronda(param)
+	/*
+	
+	Crea un movieclip que tapa con un fade de alfa 0 a 100 todo el escenario
+	en un tiempo dado por fotogramas.
+	
+	fn_fade_ronda({
+		escenario:[ancho_px,alto_px],
+		fotogramas: Number || [delay,duracion],
+		que_color: 0xffffff
+	});
+	
+	escenario: una matriz con el ancho y el alto en pixeles. Por defecto el tamaño del Stage, pero atencion porque si el SWF esta embebido en otro proyecto mas grande se toma ese valor.
+	
+	fotogramas: se puede definir de 2 maneras, con un numero se reparte casi por igual entre el delay y la duracion. Si el numero es impar redondea para abajo del delay y para arriba la duracion.
+	Si se define como una matriz, entonces toma el primer elemento como delay, y el segundo como duracion.
+	El valor por defecto es 24 fotogramas (delay=12, duracion=12)
+	
+	que_color: un numero (en formato hexadecimal o decimal). Por defecto es blanco.
+	
+	MEJORAS: definicion de color en varios formatos, consultar el standar CSS.
+	
+	NOTA: es importante que hacer coincidir el total de los fotogramas (delay+duracion) con los fotogramas en los juegos con linea de tiempo como los de ULP.
+	*/
+	
+	
+2010-09-06
+
+Se actualizó las funciones
+fn_limpiar_eventos.as
+fn_limpiar_eventos_mc.as
+
+Ahora admiten trabajar con EVAL o con RUTA. Para trabajar con EVAL hay que pasar el parametro ruta como un STRING vacio
+
+fn_limpiar_eventos({
+	nombre_mc: "ficha",
+	ruta: "",
+	listado: [0,1]
+});
+	
+esto hace:
+eval ("ficha"+0);
+eval ("ficha"+1);
+
+si el parámetro ruta se omite, por defecto toma _root y no trabaja con EVAL sicon con ruta[nombre_mc]
+
+fn_limpiar_eventos({
+	nombre_mc: "ficha",
+	listado: [0,1]
+});
+
+esto hace:
+	
+_root["ficha"+0]
+_root["ficha"+1]
+
+-----------------------------------------------------------
+
+fn_fichas ahora elimina los eventos usando la funcion 'fn_limpiar_eventos', esto sirve para mejorar los remplazos sucesivos
+
+
+--------------------------
+28/3/2011
+correccio'n de  un error en 'valor_ficha_listado'
+la comprobacio'n de fuera de tablero no era efectiva en tableros chicos cuando se solicitaba una ficha relativa a grandes distancias. Se agrego' una comprobacio'n de coordenadas antes de definir la ficha objetivo
+En teoria sigue siendo compatible con los juegos anteriores.
+
