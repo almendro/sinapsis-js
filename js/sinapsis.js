@@ -1,17 +1,18 @@
+/*
 function fn_ani_pop (mc, escala, fts, tipo, funcion) {
 	var soy_fn="fn_ani_pop";
-	/*
-		mc: MovieClip en string
-		escala:[ x, y , w, h, alfa ,... ]
-		fts: [0, 0] 
-			0- Delay
-			1- largo de la animacion en fotogramas 
+
+//		mc: MovieClip en string
+//		escala:[ x, y , w, h, alfa ,... ]
+//		fts: [0, 0] 
+//		0- Delay
+//		1- largo de la animacion en fotogramas 
 			
-	*/
+
 	
 	MClip = eval(mc);
 	if(fts == undefined) fts = [0,1];
-		
+	
 	anima_nombre = "animacion" +fn_azar([1,100000000]);
 	
 	MClip.createEmptyMovieClip(anima_nombre, MClip.getNextHighestDepth()); 
@@ -23,12 +24,12 @@ function fn_ani_pop (mc, escala, fts, tipo, funcion) {
 	MClip[anima_nombre].fts_delay_actual= 0;
 	MClip[anima_nombre].tipo= tipo;
 
-	/*--- LInea de tiempo ----*/
+
 	
 	// funcion global para desarrollo
 	 fn_ani_linea_tiempo (mc, escala, fts, tipo);
 	 
-	/*--- crea la animacion ----*/
+
 	
 	MClip[anima_nombre].onEnterFrame = function () {
 		if (this.fts[0] == this.fts_delay_actual) {
@@ -60,6 +61,8 @@ function fn_ani_pop (mc, escala, fts, tipo, funcion) {
 	}
 	return MClip[anima_nombre]
 }
+*/
+
 function fn_animacion_guia (p) {
         /*
                 Esta funcion clona las posiciones de Mclips contenidos en el MC "animacion_guia" con sus clones en el plano que se incluya la funcion
@@ -1477,6 +1480,7 @@ function fn_GC (respuesta, elementos, cantidad, repite) {
 				fn_fichas ("fichas", progresion, null, [3, 6]); 
 				traslada los valores de una progresion a los MovieClip: fichas0, fichas1, fichas2....fichasN
 				
+
 				
 		¿Para que sirve?: 
 			
@@ -1547,7 +1551,6 @@ function fn_elimina_eventos () {
 }
 function fn_fichas (mc, opciones, respuesta, icognita) {
 	var soy_fn="fn_fichas";
-
 	/*--------- IDEA----------
 		
 			Se podria hacer q ademas de definir TXT esta funcion haga:
@@ -1579,7 +1582,13 @@ function fn_fichas (mc, opciones, respuesta, icognita) {
 		
 	for (n=0; n < opciones.length; n++) {
 
+
 		MClip = eval(mc+n);
+
+    // sinapsis-js vvvv
+    $("."+mc+n).append(MClip.txt);
+
+
 		/*
 		fn_limpiar_eventos_mc ({
 				nombre_mc: mc+n,
@@ -1593,13 +1602,11 @@ function fn_fichas (mc, opciones, respuesta, icognita) {
 
 		esicognita =false;
 		
-		if (icognita.length > 0 ) for (i=0; i < icognita.length; i++) if (n == icognita[i]) { esicognita = true;  break; }
+		if (icognita) if (icognita.length > 0 ) for (i=0; i < icognita.length; i++) if (n == icognita[i]) { esicognita = true;  break; }
 		
 		// este tal vez requiera una predifinicion
 		MClip.txt = fn_unicode (opciones[n].toString());
 		tracer_lib(soy_fn,"GOTO ----> " + opciones[n].toString())
-		
-		
 		MClip.gotoAndStop(Number(opciones[n].toString())+1); // el MC salta hasta el frame correspondiente
 	
 		if (esicognita) MClip.gotoAndStop(1);
@@ -1617,7 +1624,7 @@ function fn_fichas (mc, opciones, respuesta, icognita) {
 			}
 		}
 		
-		MClip.halo._visible = false;	// oculta el halo del Mclip
+		MClip.halo._visible = false;// oculta el halo del Mclip
 		if (!(respuesta == null ) && esicognita) {	// solo entra si es una incognita y esta definida la respuesta
 			MClip.onRollOver = function () {
 				this.halo._visible = true;
@@ -1659,23 +1666,31 @@ function fn_fichas (mc, opciones, respuesta, icognita) {
 		
 		
 		if ((!(respuesta == null) && esicognita) || (!(respuesta == null) && icognita == null)) {	// solo tiene eventos si sabe la respuesta
-		
 			tracer_lib(soy_fn,"RESPUESTA ----> "+fn_cual_contiene(respuesta, opciones[n]))
 			if (!(fn_cual_contiene(respuesta, opciones[n]) == null)) { 
-				MClip.onPress = MClip.click = function () { 
-				 	acierto_evento (this)
-				}
+				/* MClip.onPress = MClip.click = function () {
+				 	acierto_evento (this);
+				}*/
+
+				 // sinapsis-js vvvv
+				$("."+mc+n).click(function () {
+				 	acierto_evento (this);
+				});
 			} else {
-				MClip.onPress = MClip.click = function () { 
-						/*mal*/
-					 desacierto_evento (this)
-				}
-			}
-			
-			
+				/*MClip.onPress = MClip.click = function () { 
+					//mal
+					 desacierto_evento (this);
+				}*/
+
+				 // sinapsis-js vvvv
+    		$("."+mc+n).click(function () {
+						desacierto_evento (this);
+				});
+			}			
 		}
 	}
-	return opciones; // devuelve las opciones esto siver para creaciones implicitas 'opciones = fn_fichas (null, fn_GC(....'
+// devuelve las opciones esto siver para creaciones implicitas 'opciones = fn_fichas (null, fn_GC(....'
+	return opciones; 
 }
 
 
@@ -1685,6 +1700,7 @@ function fn_fichas (mc, opciones, respuesta, icognita) {
 
 
 function acierto_evento (mc) {
+                alert("Acierto");
 		if (_root.comenzo_juego) {
 			/*acierto*/
 			tracer_lib(soy_fn,"hay!");
@@ -1699,6 +1715,7 @@ function acierto_evento (mc) {
 		}
 }
 function desacierto_evento (mc) {
+                alert("Desacierto");
 		if (_root.comenzo_juego) {
 			_root.sostiene._visible = true;
 			tracer_lib(soy_fn,"hay!");
@@ -3415,9 +3432,12 @@ function tiempo_juego_matar () {
 	this.mc_tiempo_juego.removeMovieClip();
 	this.mc_tiempo_pausa.removeMovieClip();
 }
+
+/* 
+Reemplazada por delay
 function  fn_tiemp_dispara (delay, funcion, parametros) {
 	var soy_fn="fn_tiemp_dispara";
-	/*--- crea la animacion ----*/
+	//--- crea la animacion ----
 	anima_nombre = "animacion" +fn_azar([1,100000000]);
 	MC = this.createEmptyMovieClip(anima_nombre, this.getNextHighestDepth()); 
 	MC.delay = delay;
@@ -3439,7 +3459,7 @@ function  fn_tiemp_dispara (delay, funcion, parametros) {
 	return MC
 }
 
-
+*/
 
 function fn_diferencias_entre_matriz (entrada) {
 	var soy_fn="fn_diferencias_entre_matriz";
@@ -4810,10 +4830,7 @@ por = [			 chr(225),
 	}
 	return txt;
 }
-		trace (fn_unicode ("a' e' i' o' u' u'' n' n~ ?' !'"));
-		trace (fn_unicode ("A' E' I' O' U' U'' N' N~ ?' !'"));
-		
-		trace (" inversa "+ fn_unicode ({txt: fn_unicode ("A' E' I' O' U' U'' N' N~ ?' !'"), inversa: true }));
+
 	function fn_mimo_mc (mc1, mc2) {
 	var soy_lib = "fn_mimo_mc";
 	// promover a libs
