@@ -1,0 +1,1 @@
+trace('     BD: NUMEROS ');trace('------------------------------------');//coloresvar numeros_txt:Array = Array ('Cero', 'Uno', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis', 'Siete', 'Ocho','Nueve', 'Diez');//384 x 320

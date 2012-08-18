@@ -1,0 +1,1 @@
+trace('     BD: LETRAS ');trace('------------------------------------'); // formas geometricasvar letras_txt:Array  = Array ("A", "B", "C","D", "E" );
