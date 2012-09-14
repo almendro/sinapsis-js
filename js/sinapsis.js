@@ -1451,7 +1451,7 @@ function desacierto () {
 		Esta funcion PUEDE SER REMPLAZADA POR EL JUEGO!
 	*/
 
-	this.play();
+	_root.play();
 	tracer_lib(soy_fn,'perdio');
 	fn_gf_mal ();
 	fn_elimina_eventos ()
@@ -1584,9 +1584,11 @@ function fn_fichas (mc, opciones, respuesta, icognita) {
 
 
 		MClip = eval(mc+n);
+		//alert("Mclip "+MClip+ " = "+mc+n+"");
 
+		//return;
     // sinapsis-js vvvv
-    $("."+mc+n).append(MClip.txt);
+    //$("."+mc+n).append(MClip.txt);
 
 
 		/*
@@ -1668,24 +1670,16 @@ function fn_fichas (mc, opciones, respuesta, icognita) {
 		if ((!(respuesta == null) && esicognita) || (!(respuesta == null) && icognita == null)) {	// solo tiene eventos si sabe la respuesta
 			tracer_lib(soy_fn,"RESPUESTA ----> "+fn_cual_contiene(respuesta, opciones[n]))
 			if (!(fn_cual_contiene(respuesta, opciones[n]) == null)) { 
-				/* MClip.onPress = MClip.click = function () {
-				 	acierto_evento (this);
-				}*/
-
-				 // sinapsis-js vvvv
-				$("."+mc+n).click(function () {
-				 	acierto_evento (this);
-				});
+				MClip.onPress = function () {
+					alert("clic para acierto");
+				 	acierto_evento (MClip);
+				}
 			} else {
-				/*MClip.onPress = MClip.click = function () { 
+				MClip.onPress = function () { 
 					//mal
-					 desacierto_evento (this);
-				}*/
-
-				 // sinapsis-js vvvv
-    		$("."+mc+n).click(function () {
-						desacierto_evento (this);
-				});
+					alert("clic para DESacierto");
+				 desacierto_evento (MClip);
+				}
 			}			
 		}
 	}
@@ -1703,7 +1697,7 @@ function acierto_evento (mc) {
                 alert("Acierto");
 		if (_root.comenzo_juego) {
 			/*acierto*/
-			tracer_lib(soy_fn,"hay!");
+			//tracer_lib(soy_fn,"hay!");
 
 			marcar_MC(mc);
 			acierto(mc.txt);
@@ -1718,7 +1712,7 @@ function desacierto_evento (mc) {
                 alert("Desacierto");
 		if (_root.comenzo_juego) {
 			_root.sostiene._visible = true;
-			tracer_lib(soy_fn,"hay!");
+			//tracer_lib(soy_fn,"hay!");
 			fn_elimina_eventos (); // ESTO ESTA MAL, hay que quitarlo, pero verificar en los juegos anteriores al 29/9/2010
 			desacierto ();
 			mc.onPress = null;
