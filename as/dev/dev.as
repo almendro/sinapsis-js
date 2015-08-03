@@ -2,7 +2,7 @@
 //opcionales
 loadMovieNum('dev/debugueador.swf',10000);
 
-#include "../lib/dev/funciones_parametros.as"
+#include "funciones_parametros.as"
 
 function tracer ( a ) { trace ( a )  }
 
