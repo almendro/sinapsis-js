@@ -12,6 +12,9 @@ function fn_fotograma_dispara_funcion (e){
 	Se pueden poner etiquetas como fotogramas claves en el AS de flash
 	Ejemplo:
 			etiqueta = "fotograma clave";
+			
+	La variable 'etiqueta' debe estar en la linea de tiempo del MC pasado como parametro.
+	
 */
 
 	var mc = e.mc;
@@ -53,7 +56,7 @@ function fn_fotograma_dispara_funcion (e){
 		id = "id_fn_fotograma_dispara_funcion_"+_level0.id_fn_fotograma_dispara_funcion++;
 		mc_control = this.createEmptyMovieClip(id, this.getNextHighestDepth());
 		
-		trace("funcio["+n+"] "+funcion[n]);
+		trace("funcion["+n+"] "+funcion[n]);
 		trace("e["+n+"] "+e[n]);
 		
 		mc_control.mc = mc;
